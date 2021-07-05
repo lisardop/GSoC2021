@@ -5,6 +5,6 @@ This Google Sumer of Code project "Visual recognition and deciphering of Aztec g
 ## First Code: 
 A brief instruction:
 
-- Step 1:
+- Goal:
 
-Step 1
+My goal is to do server work between the DeepLearning app in Tensorflow developed by Tarun and the Web app of aztec glyphs in University of Oregon servers.
