@@ -99,10 +99,10 @@ label {
 <body>
         <h1>Visual Recognition of Aztec Hieroglyphs</h1>
         <form method="post" action="/" id="form" enctype="multipart/form-data">
-            <input type="file" name="file" id="file" onchange="submitForm(this)" autocomplete="off" accept="image/gif, image/jpeg, image/png" required hidden multiple>
+            <input type="file" name="file" id="file" onchange="submitForm(this)" autocomplete="off" accept="image/gif, image/jpeg, image/png, image/webp" required hidden multiple>
             <input type="hidden" name="client_id" id="client_id">
             <input type="hidden" name="meta" id="meta">
-            <label for="file" class="noSelect">Select images to analyze</label><i> (JPG, JPEG, PNG, GIF or TIFF only)</i>
+            <label for="file" class="noSelect">Select images to analyze</label><i> (JPG, JPEG, PNG, GIF or WEBP only)</i>
         </form>
         <br><br>
     <button class="clearButton noSelect" id="clearButton" style="cursor:pointer">Clear results</button>
