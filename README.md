@@ -49,7 +49,7 @@ It has a fancy label for upload files button. When pressed it's hidden and 'Clea
 
 *home folder = /var/www/html/aztecglyphs/*
 
-- In the console, go to your Home folder and create a the subfolders of the project:
+- In the console, go to your Home folder and create the subfolders of the project:
 
 ./static/
 
