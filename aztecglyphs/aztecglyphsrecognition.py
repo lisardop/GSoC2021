@@ -18,7 +18,8 @@ import tensorflow as tf
 from scipy.spatial import distance
 import time
 
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'tiff'])
+# TIFF, BMP or ICO not supported
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'webp'])
 UPLOAD_FOLDER = 'static/uploads/'
 
 def allowed_file(filename):
@@ -62,7 +63,7 @@ def home():
 	
 def extract_features():
 	images_path = 'static/samples/'
-	image_extensions = ['.jpg', '.png', '.jpeg', '.gif', '.tiff']
+	image_extensions = ['.jpg', '.png', '.jpeg', '.gif', '.webp']
 	max_num_images = 10000
 	images = [os.path.join(dp, f) for dp, dn, filenames in os.walk(images_path) for f in filenames if os.path.splitext(f)[1].lower() in image_extensions]
 	images_website.clear()
