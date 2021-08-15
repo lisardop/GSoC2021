@@ -41,7 +41,7 @@ It's adapted from [Tarun's work](https://colab.research.google.com/drive/1rUA51e
 
 - aztecglyphrecognition.html
 
-It has a fancy label for upload files button. When pressed it's hidden and 'Clear results' is shown instead. Then gets the results of the array from Mobilenet .py with a socket and print back them in the browser. In the meanwhile a gear gif is shown while waiting the predictions.
+There is a fancy label for upload files button. When pressed it's hidden and 'Clear results' is shown instead. Then gets the results of the array from Mobilenet .py with a socket and print back them in the browser. In the meanwhile a gear gif is shown while waiting the predictions.
 
 # Instructions: 
 
