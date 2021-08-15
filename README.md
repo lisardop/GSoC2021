@@ -13,7 +13,7 @@ My goal is to do server work between the DeepLearning app in Tensorflow develope
 
 *home folder = /var/www/html/aztecglyphs/*
 
-- Go to your Home folder and create a virtual enviroment
+- Go to your Home folder and create a virtual environment
 
 ~~~
 python3 -m venv env
@@ -21,7 +21,7 @@ python3 -m venv env
 
 >
 
-- Active the enviroment
+- Activate the environment
 
 ~~~
 source env/bin/activate
@@ -35,7 +35,7 @@ source env/bin/activate
 pip3 install flask flask-executor Werkzeug flask-socketio keras==2.4 pillow
 ~~~
 
-- Export app name and enviroment for Flask
+- Export app name and environment for Flask
 
 ~~~
 export FLASK_APP=aztecglyphrecognition
