@@ -52,7 +52,7 @@ python3 -m flask run
 
 >
 
-- Wait and open website in navigator via 5000 port
+- Wait and open website in navigator via 5000 port (replace localhost IP with your address)
 
 ~~~
 http://127.0.0.1:5000/
