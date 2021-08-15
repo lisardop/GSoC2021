@@ -1,19 +1,86 @@
 
-# 2021GSoC_AztecGlyphs
+# Google Summer of Code 2021 "Aztec Glyphs" Report
 This Google Sumer of Code project "Visual recognition and deciphering of Aztec glyphs using Keras " is contributed by Lisardo Pérez Lugones with Red Hen Lab. 
 
-## Goal: 
-My goal is to do server work between the DeepLearning Mobilenet app developed by Tarun and the Web app of aztec glyphs in University of Oregon servers.
+## 1. Introduction: 
+My goal was to adapt a DeepLearning Mobilenet app developed by Tarun for glyph recognition, create a user Form for image upload to the [Aztec hieroglyphs website](https://aztecglyphs.uoregon.edu/) -University of Oregon- or anywhere...
+
+The main concept for the project was:
+
+- Recreate aztecglyphs.uoregon.edu site
+- Integrate a form or end-user webpage for upload images with browser (HTML Javascript JSON Socket-io).
+- Provide images to the prototype using FLASK.
+- Adapt a prototype working with CPU (non-GPU).
+- The result of prediction comes back to the user via same webpage.
+- New user images are stored on filesystem.
+
+Server specifications:
+
+- Virtual Machine with 2 cores and 4 GB RAM.
+- RedHat 7 Enterprise or CentOS 7 for a non-GPU enviroment.
+- Do not reach more than 40 GB of virtual disk availability.
+- Aztec hieroglypghs website is developed with Drupal 7.
+
+At the end these were the features:
+
+- User access via 5000 port (i.e. http://127.0.0.1:5000/)
+- User can select multiple images (png, jpg, jpeg, gif or webp only)
+- User request gest an ID and webpage waits for the results.
+- Mobilenet prototype finds the 5 most accurated images from its own dataset.
+- Print back in browser with the results per each user image.
+- User images are stored on the server for potentially increase the dataset.
+- User can clear results and start over.
+
+## 2. Implementation
+
+The tool is made with two files:
+
+- aztecglyphrecognition.py (Mobilenet prototype)
+
+It's adapted from [Tarun's work](https://colab.research.google.com/drive/1rUA51e5Wz-VxsuNOXkfwIcD8PPasXMAG) to Flask. While the client doesn't upload any image, wait in 'blank' mode, if not, upload the image(s), load them and analyze them, get the 5 closes images, extract the features and load the results in an array.
+
+- aztecglyphrecognition.html
+
+It has a fancy label for upload files button. When pressed it's hidden and 'Clear results' is shown instead. Then gets the results of the array from Mobilenet .py with a socket and print back them in the browser. In the meanwhile a gear gif is shown while waiting the predictions.
 
 ## Instructions: 
-
-- Prerequisites: Python 3.9
 
 *root folder = /var/www/html/*
 
 *home folder = /var/www/html/aztecglyphs/*
 
-- Go to your Home folder and create a virtual environment
+- In the console, go to your Home folder and create a the subfolders of the project:
+
+./static/
+
+./static/uploads/
+*here user uploaded images will be stored*
+
+./static/samples/
+*add as folder or soft link to images dataset (for me: /var/www/html/aztecglyphs/sites/default/files/)*
+
+./templates/
+
+- Import the files (check "View Code" on the top of this website):
+
+./aztecglyphrecognition.py
+./static/gear.gif
+./templates/azteclyphrecognition.html
+./templates/blank.html
+
+## Make it works:
+
+Prerequisites:
+
+- Python 3.9 installed
+- Port 5000 allowed
+- ./static/uploads/ write permission
+
+>
+
+Again, in our home directory (for me: /var/www/html/aztecglyphs/)
+
+- Creat a virtual environment
 
 ~~~
 python3 -m venv env
