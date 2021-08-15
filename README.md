@@ -55,7 +55,11 @@ python3 -m flask run
 - Wait and open website in navigator via 5000 port (replace localhost IP with your address)
 
 ~~~
-http://127.0.0.1:5000/
+[http://127.0.0.1:5000/](http://127.0.0.1:5000)
 ~~~
 
 - Enjoy!
+
+08-15-2021
+
+You can have a look at [my GSoC blog](https://lisardop.github.io/) with all the timeline progress.
