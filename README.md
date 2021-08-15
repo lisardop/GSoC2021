@@ -3,7 +3,7 @@
 This Google Sumer of Code project "Visual recognition and deciphering of Aztec glyphs using Keras " is contributed by Lisardo Pérez Lugones with Red Hen Lab. 
 
 ## Goal: 
-My goal is to do server work between the DeepLearning app in Tensorflow developed by Tarun and the Web app of aztec glyphs in University of Oregon servers.
+My goal is to do server work between the DeepLearning Mobilenet app developed by Tarun and the Web app of aztec glyphs in University of Oregon servers.
 
 ## Instructions: 
 
@@ -54,9 +54,9 @@ python3 -m flask run
 
 - Wait and open website in navigator via 5000 port (replace localhost IP with your address)
 
-~~~
+
 [http://127.0.0.1:5000/](http://127.0.0.1:5000)
-~~~
+
 
 - Enjoy!
 
