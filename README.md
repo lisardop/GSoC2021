@@ -9,8 +9,9 @@ My goal is to do server work between the DeepLearning app in Tensorflow develope
 
 - Prerequisites: Python 3.9
 
-Root folder = /var/www/html/
-Home folder = /var/www/html/aztecglyphs/
+*root folder = /var/www/html/*
+
+*home folder = /var/www/html/aztecglyphs/*
 
 - Go to your Home folder and create a virtual enviroment
 
