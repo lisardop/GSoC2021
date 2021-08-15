@@ -4,6 +4,7 @@
 <head>
     <title>Visual Recognition of Aztec Hieroglyphs</title>
     <!--<link ="stylesheet" href="style.css" reltype="text/css"> -->
+    <!-- put css style in html head instead file -->
     <style type="text/css">
 body {
     background-color: #fefefe;
@@ -122,8 +123,10 @@ label {
             localStorage.setItem('client_id', uuid())
         }
         clientId = localStorage.getItem('client_id')
-
+        
+        <!-- replace localhost with you website url -->
         var socket = io.connect('http://127.0.0.1:5000');
+        <!-- print 5 most accurate results from algorithm -->
         socket.on(clientId, function (data) {
             var payload = JSON.parse(data)
             $('#' + payload['image_id']).html('')
@@ -156,11 +159,13 @@ label {
 
                 var container = $(document.createElement('div'))
                 container.attr('class', 'collectionContainer')
-
+                
+                <!-- print user image filename -->
                 var fileName = $(document.createElement('div')).html(files[i].name)
                 fileName.attr('class', 'fileName')
                 container.append(fileName)
 
+                <!-- print user image -->
                 var sourceImage = $(document.createElement('img'))
                 sourceImage.attr('src', URL.createObjectURL(files[i]))
                 sourceImage.attr('width', '120')
