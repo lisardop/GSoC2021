@@ -135,8 +135,8 @@ You can have a look at [my GSoC blog](https://lisardop.github.io/) with all the 
 
 - Main page
 
-![aztecglyphrecognitionhtml](https://raw.githubusercontent.com/lisardop/lisardop.github.io/master/assets/img/aztecglyphrecognitionhtml.jpg)
+![aztecglyphrecognitionhtml](https://lisardop.github.io/assets/img/aztecglyphrecognitionhtml.jpg)
 
 - Results after upload
 
-![aztecglyphresults](https://lisardop.github.io/assets/img/mendoza_results.jpg)
+![aztecglyphrecognition_result](https://lisardop.github.io/assets/img/aztecglyphrecognitionhtml_result.jpg)
