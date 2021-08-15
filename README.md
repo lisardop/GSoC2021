@@ -130,3 +130,13 @@ python3 -m flask run
 08-15-2021
 
 You can have a look at [my GSoC blog](https://lisardop.github.io/) with all the timeline progress.
+
+# VISUAL RESULT
+
+- Main page
+
+![aztecglyphrecognitionhtml](https://raw.githubusercontent.com/lisardop/lisardop.github.io/master/assets/img/aztecglyphrecognitionhtml.jpg)
+
+- Results after upload
+
+![aztecglyphresults](https://lisardop.github.io/assets/img/mendoza_results.jpg)
