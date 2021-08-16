@@ -1,0 +1,6 @@
+flask
+flask-executor
+Werkzeug
+flask-socketio
+keras==2.4
+pillow
