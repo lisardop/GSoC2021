@@ -86,7 +86,7 @@ Prerequisites:
 
 Again, in our home directory (for me: /var/www/html/aztecglyphs/)
 
-- Creat a virtual environment
+- Create a virtual environment
 
 ~~~
 python3 -m venv env
