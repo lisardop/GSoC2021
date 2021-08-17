@@ -41,7 +41,7 @@ Test and implementation:
 
 # 2. Implementation
 
-The tool is made with two files:
+The tool use two main files:
 
 - aztecglyphrecognition.py (Mobilenet prototype)
 
