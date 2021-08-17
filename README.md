@@ -39,7 +39,7 @@ Test and implementation:
 - This project was tested in a local VM with same server specifications.
 - Due to the need for access and availability of end-server admin, the final implementation is still pending but further instructions are provided in this document.
 
-# 2. Implementation (development)
+# 2. Implementation
 
 The tool is made with two files:
 
