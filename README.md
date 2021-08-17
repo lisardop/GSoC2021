@@ -28,7 +28,7 @@ At the end these were the features (development environment):
 
 - User access via 5000 port (i.e. http://127.0.0.1:5000/)
 - User can select multiple images (png, jpg, jpeg, gif or webp only)
-- User request gest an ID and webpage waits for the results.
+- User request gets an ID and webpage waits for the results.
 - Mobilenet prototype finds the 5 most accurated images from its own dataset.
 - Print back in browser with the results per each user image.
 - User images are stored on the server for potentially increase the dataset.
