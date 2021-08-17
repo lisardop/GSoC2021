@@ -1,18 +1,21 @@
 
 # Google Summer of Code 2021 "Aztec Glyphs" Report
-This Google Sumer of Code project "Visual recognition and deciphering of Aztec glyphs using Keras " is contributed by Lisardo Pérez Lugones with Red Hen Lab. 
+This Google Sumer of Code project ["Visual recognition and deciphering of Aztec glyphs using Keras"](https://summerofcode.withgoogle.com/projects/#5201622306652160) is contributed by Lisardo Pérez Lugones with [Red Hen Lab](https://sites.google.com/site/distributedlittleredhen/summer-of-code/red-hen-lab-gsoc-2021-projects).
 
-## 1. Introduction: 
+- Code Team: [Tarun Nagdeve ](https://trunnmosby.github.io/GSoC-2021/) & [Lisardo Pérez Lugones](https://lisardop.github.io/)
+- Mentors: Stephanie Wood, Jungseock Joo & Juan José Batalla Rosado
+
+# 1. Introduction
 My goal was to adapt a DeepLearning Mobilenet app developed by Tarun for glyph recognition, create a user Form for image upload to the [Aztec hieroglyphs website](https://aztecglyphs.uoregon.edu/) -University of Oregon- or anywhere...
 
 The main concept for the project was:
 
 - Recreate aztecglyphs.uoregon.edu site
-- Integrate a form or end-user webpage for upload images with browser (HTML Javascript JSON Socket-io).
-- Provide images to the prototype using FLASK.
 - Adapt a prototype working with CPU (non-GPU).
+- Integrate a form or end-user webpage for upload images with browser (HTML Javascript JSON Socket-io).
+- Provide images to the prototype and get the prediction using FLASK.
 - The result of prediction comes back to the user via same webpage.
-- New user images are stored on filesystem.
+- New user images are stored on a filesystem subfolder.
 
 Server specifications:
 
@@ -21,7 +24,7 @@ Server specifications:
 - Do not reach more than 40 GB of virtual disk availability.
 - Aztec hieroglypghs website is developed with Drupal 7.
 
-At the end these were the features:
+At the end these were the features (development environment):
 
 - User access via 5000 port (i.e. http://127.0.0.1:5000/)
 - User can select multiple images (png, jpg, jpeg, gif or webp only)
@@ -31,7 +34,12 @@ At the end these were the features:
 - User images are stored on the server for potentially increase the dataset.
 - User can clear results and start over.
 
-## 2. Implementation
+Test and implementation:
+
+- This project was tested in a local VM with same server specifications.
+- Due to the need for access and availability of end-server admin, the final implementation is still pending but further instructions are provided in this document.
+
+# 2. Implementation (development)
 
 The tool is made with two files:
 
@@ -43,7 +51,7 @@ It's adapted from [Tarun's work](https://colab.research.google.com/drive/1rUA51e
 
 There is a fancy label for upload files button. When pressed it's hidden and 'Clear results' is shown instead. Then gets the results of the array from Mobilenet .py with a socket and print back them in the browser. In the meanwhile a gear gif is shown while waiting the predictions.
 
-# Instructions: 
+# 3. Main Instructions
 
 *root folder = /var/www/html/*
 
@@ -68,11 +76,11 @@ There is a fancy label for upload files button. When pressed it's hidden and 'Cl
 ./templates/azteclyphrecognition.html
 ./templates/blank.html
 
-## Make it works:
+# 4. Make-it-works (development)
 
 Prerequisites:
 
-- Python 3.9 installed
+- Python 3.9 installed with pip
 - Port 5000 allowed
 - ./static/uploads/ write permission
 
@@ -119,19 +127,167 @@ python3 -m flask run
 
 >
 
-- Wait and open website in navigator via 5000 port (replace localhost IP with your address)
+- Wait and open website in navigator via 5000 port
 
 
 [http://127.0.0.1:5000/](http://127.0.0.1:5000)
 
 
-- Enjoy!
+# 5. Make-it-works (production) as adminuser with root-like privileges
 
-08-15-2021
+Let's use Apache + WSGI + FLASK with virtual environment
 
-You can have a look at [my GSoC blog](https://lisardop.github.io/) with all the timeline progress.
+- Go to your home directoy (for me: /var/www/http/aztecglyphs/) and run:
 
-# VISUAL RESULT
+~~~
+sudo yum install mod_wsgi
+~~~
+
+>
+
+Remember get aliases for python3.9 and pip3.9
+
+~~~
+alias python3=python3.9
+alias pip3=pip3.9
+~~~
+
+> 
+
+~~~
+pip3 install virtualenv
+~~~
+
+> 
+
+Still in your home directory, run:
+
+~~~
+virtualenv env_aztecglyphrecognition -p python3
+~~~
+
+> 
+
+~~~
+source env_name/bin/activate
+~~~
+
+> 
+
+~~~
+pip3 install flask
+~~~
+
+> 
+
+WSGI config
+
+> 
+
+~~~
+vi aztecglyphrecognition.wsgi
+~~~
+
+> 
+
+edit with:
+
+> 
+
+~~~
+from aztecglyphrecongition import app as application
+
+aztecglyphrecognition = '/var/www/html/aztecglyphs/aztecglyphrecognition.py'
+execfile(aztecglyphrecognition, dict(__file__=aztecglyphrecognition))
+~~~
+
+> 
+
+Now configure Apache for allow directory where VirtualHost config files are.
+
+> 
+
+~~~
+vi /etc/httpd/conf/httpd.conf
+~~~
+
+> 
+
+If not, add:
+
+~~~
+IncludeOptional sites-enabled/*.conf
+~~~
+
+> 
+
+Make sure directories /etc/httpd/sites-available/ & /etc/httpd/sites-enabled/ exists
+
+> 
+
+~~~
+vi /etc/httpd/sites-available/aztecglyphrecognition.conf
+~~~
+
+> 
+
+edit with:
+
+> 
+
+~~~
+<VirtualHost *:5000>
+
+        WSGIDaemonProcess azctecglyphrecognition user=apache group=apache threads=5 python-path=/var/www/html/aztecglyphs/env_aztecglyphrecognition:/var/www/html/aztecglyphs/env_aztecglyphrecognition/lib/python3.9/site-packages
+  WSGIScriptAlias / /var/www/html/aztecglyphs/aztecglyphrecognition.wsgi
+        # You have to add every Flask route as WSGI alias:
+        WSGIScriptAlias /(.*) /var/www/html/aztecglyphs/env_aztecglyphrecognition/(.*)
+        <Directory /var/www/html/flask>
+                WSGIProcessGroup aztecglyphrecognition
+                WSGIApplicationGroup %{GLOBAL}
+                Order deny,allow
+                Allow from all
+        </Directory>
+
+        ServerName aztecglyphs.uoregon.edu
+        ServerAdmin adminuser@aztecglyphs.uoregon.edu
+        DocumentRoot /var/www/html/aztecglyphs
+        LogLevel warn
+        ErrorLog /var/log/httpd/aztecglyphrecognition-error.log
+        CustomLog /var/log/httpd/aztecglyphrecognition-access.log combined
+
+</VirtualHost>
+~~~
+
+> 
+
+Create a sof link with enabled sites:
+
+> 
+
+~~~
+ln -s /etc/httpd/sites-available/aztecglyphrecognition.conf /etc/httpd/sites-enabled/aztecglyphrecognition.conf
+~~~
+
+> 
+
+Check "Apache" user has proper permission under /var/www/html/aztecglyphs/
+
+and restart Apache server:
+
+> 
+
+~~~
+sudo service httpd restart
+~~~
+
+> 
+
+Now, it should be ready for user (https://yourdomain.here:5000)
+
+> 
+
+## VISUAL RESULT
 
 - Main page
 
@@ -140,3 +296,15 @@ You can have a look at [my GSoC blog](https://lisardop.github.io/) with all the 
 - Results after upload
 
 ![aztecglyphrecognition_result](https://lisardop.github.io/assets/img/aztecglyphrecognitionhtml_result.jpg)
+
+# Updated
+
+08-15-2021
+
+You can have a look at [my GSoC blog](https://lisardop.github.io/) with all the timeline progress.
+
+# License
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
