@@ -76,15 +76,13 @@ There is a fancy label for upload files button. When pressed it's hidden and 'Cl
 ./templates/azteclyphrecognition.html
 ./templates/blank.html
 
-# 4. Make-it-works (development)
-
 Prerequisites:
 
 - Python 3.9 installed with pip
 - Port 5000 allowed
 - ./static/uploads/ write permission
 
->
+# 4. Make-it-works (development)
 
 Again, in our home directory (for me: /var/www/html/aztecglyphs/)
 
