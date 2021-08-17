@@ -81,6 +81,14 @@ Prerequisites:
 - Python 3.9 installed with pip
 - Port 5000 allowed
 - ./static/uploads/ write permission
+- Remember get aliases for python3.9 and pip3.9
+
+~~~
+alias python3=python3.9
+alias pip3=pip3.9
+~~~
+
+>
 
 # 4. Make-it-works (development)
 
@@ -139,15 +147,6 @@ Let's use Apache + WSGI + FLASK with virtual environment
 
 ~~~
 sudo yum install mod_wsgi
-~~~
-
->
-
-Remember get aliases for python3.9 and pip3.9
-
-~~~
-alias python3=python3.9
-alias pip3=pip3.9
 ~~~
 
 > 
