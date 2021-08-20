@@ -1,7 +1,7 @@
 """Modify from original file located at
     https://colab.research.google.com/drive/1rUA51e5Wz-VxsuNOXkfwIcD8PPasXMAG
 """
-
+# Import all needed
 import os
 import urllib.request
 from flask import Flask, flash, request, redirect, url_for, render_template, session, json, jsonify
@@ -37,11 +37,11 @@ base_models = tf.keras.applications.MobileNet()
 features = []
 images_website = []
 feat_extractor = Model(inputs=base_models.input, outputs=base_models.get_layer("reshape_2").output)
-
+# Main route
 @app.route('/')
 def index():
 	return home()
-
+# When the user POST do:
 @app.route('/', methods=['POST'])
 def upload_image():
 	clientId = request.form.get('client_id')
@@ -49,7 +49,7 @@ def upload_image():
 	files = request.files.getlist("file")
 		
 	meta = json.loads(request.form.get('meta'))
-	
+	# get the uploaded image and analyze
 	for file in files:
 		imageId = meta[file.filename]
 		filename = secure_filename(file.filename)
@@ -57,10 +57,10 @@ def upload_image():
 		file.save(imagePath)
 		executor.submit(analyze_image, imagePath, file.filename, clientId, imageId)
 	return render_template('blank.html')
-
+# index home
 def home():
 	return render_template('aztecglyphrecognition.html')
-	
+#analyze all samples images in the first run
 def extract_features():
 	images_path = 'static/samples/'
 	image_extensions = ['.jpg', '.png', '.jpeg', '.gif', '.webp']
@@ -85,7 +85,7 @@ def extract_features():
 		features.append(feat)
 
 	print('finished extracting features for %d images' % len(images))
-	
+#get the 5 most close images	
 def analyze_image(imagePath, originalFileName, clientId, imageId):
 	print("analyzing image: %s!" % (imagePath))
 	img, x = load_image(imagePath)
@@ -98,18 +98,18 @@ def analyze_image(imagePath, originalFileName, clientId, imageId):
 		payload['results'].append(images_website[idx])
 
 	socketio.emit(clientId, json.dumps(payload))
-
+#load and reshape
 def load_image(path):
 	img = image.load_img(path, target_size=base_models.input_shape[1:3])
 	x = image.img_to_array(img)
 	x = np.expand_dims(x, axis=0)
 	x = preprocess_input(x)
 	return img, x
-
+# get the first 5 most accurate from matches
 def get_closest_images(imga, num_results=5):
 	distances = [ distance.cosine(imga, feat) for feat in features ]
 	idx_closest = sorted(range(len(distances)), key=lambda k: distances[k])[1:num_results+1]
 	return idx_closest
-
+# start extracting
 extract_features()
 
