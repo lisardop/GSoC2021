@@ -43,7 +43,7 @@ Test and implementation:
 
 # 2. Implementation
 
-There is two main folder:
+There is two main environments:
 
 ## AZTECGLYPHS_LOCALHOST (for use in your local machine or VM)
 
