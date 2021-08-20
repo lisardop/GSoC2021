@@ -37,11 +37,17 @@ At the end these were the features (development environment):
 Test and implementation:
 
 - This project was tested in a local VM with same server specifications.
-- Due to the need for access and availability of end-server admin, the final implementation is still pending but further instructions are provided in this document.
+- Due to the need for access and availability of end-server admin, the final implementation in Univ. Oregon server is pending, but a functional URL is provided:
+
+[Aztec Glyphs Recognition URL](https://aztecglyphrecognition.herokuapp.com)
 
 # 2. Implementation
 
-The tool use two main files:
+There is two main folder:
+
+## AZTECGLYPHS_LOCALHOST (for use in your local machine or VM)
+
+The tools use two main files:
 
 - aztecglyphrecognition.py (Mobilenet prototype)
 
@@ -51,238 +57,12 @@ It's adapted from [Tarun's work](https://colab.research.google.com/drive/1rUA51e
 
 There is a fancy label for upload files button. When pressed it's hidden and 'Clear results' is shown instead. Then gets the results of the array from Mobilenet .py with a socket and print back them in the browser. In the meanwhile a gear gif is shown while waiting the predictions.
 
-# 3. Main Instructions
+## AZTECGLYPHS_SERVER_PRODUCTION (for deploy in a hosting server)
 
-*root folder = /var/www/html/*
+Use also two main files, similar as in localhost env:
 
-*home folder = /var/www/html/aztecglyphs/*
-
-- In the console, go to your Home folder and create the subfolders of the project:
-
-./static/
-
-./static/uploads/
-*here user uploaded images will be stored*
-
-./static/samples/
-*add as folder or soft link to images dataset (for me: /var/www/html/aztecglyphs/sites/default/files/)*
-
-./templates/
-
-- Import the files (check "View Code" on the top of this website):
-
-./aztecglyphrecognition.py
-./static/gear.gif
-./templates/azteclyphrecognition.html
-./templates/blank.html
-
-Prerequisites:
-
-- Python 3.9 installed with pip
-- Port 5000 allowed
-- ./static/uploads/ write permission
-- Remember get aliases for python3.9 and pip3.9
-
-~~~
-alias python3=python3.9
-alias pip3=pip3.9
-~~~
-
->
-
-# 4. Make-it-works (development)
-
-Again, in our home directory (for me: /var/www/html/aztecglyphs/)
-
-- Create a virtual environment
-
-~~~
-python3 -m venv env
-~~~
-
->
-
-- Activate the environment
-
-~~~
-source env/bin/activate
-~~~
-
->
-
-- Install dependencies
-
-~~~
-pip3 install flask flask-executor Werkzeug flask-socketio keras==2.4 pillow
-~~~
-
-- Export app name and environment for Flask
-
-~~~
-export FLASK_APP=aztecglyphrecognition
-export FLASK_ENV=deployment
-~~~
-
->
-
-- Run the project
-
-~~~
-python3 -m flask run
-~~~
-
->
-
-- Wait and open website in navigator via 5000 port
-
-
-[http://127.0.0.1:5000/](http://127.0.0.1:5000)
-
-
-# 5. Make-it-works (production) as adminuser with root-like privileges
-
-Let's use Apache + WSGI + FLASK with virtual environment
-
-- Go to your home directoy (for me: /var/www/http/aztecglyphs/) and run:
-
-~~~
-sudo yum install mod_wsgi
-~~~
-
-> 
-
-~~~
-pip3 install virtualenv
-~~~
-
-> 
-
-Still in your home directory, run:
-
-~~~
-virtualenv env_aztecglyphrecognition -p python3
-~~~
-
-> 
-
-~~~
-source env_name/bin/activate
-~~~
-
-> 
-
-~~~
-pip3 install flask
-~~~
-
-> 
-
-WSGI config
-
-> 
-
-~~~
-vi aztecglyphrecognition.wsgi
-~~~
-
-> 
-
-edit with:
-
-> 
-
-~~~
-from aztecglyphrecongition import app as application
-
-aztecglyphrecognition = '/var/www/html/aztecglyphs/aztecglyphrecognition.py'
-execfile(aztecglyphrecognition, dict(__file__=aztecglyphrecognition))
-~~~
-
-> 
-
-Now configure Apache for allow directory where VirtualHost config files are.
-
-> 
-
-~~~
-vi /etc/httpd/conf/httpd.conf
-~~~
-
-> 
-
-If not, add:
-
-~~~
-IncludeOptional sites-enabled/*.conf
-~~~
-
-> 
-
-Make sure directories /etc/httpd/sites-available/ & /etc/httpd/sites-enabled/ exists
-
-> 
-
-~~~
-vi /etc/httpd/sites-available/aztecglyphrecognition.conf
-~~~
-
-> 
-
-edit with:
-
-> 
-
-~~~
-<VirtualHost *:5000>
-
-        WSGIDaemonProcess azctecglyphrecognition user=apache group=apache threads=5 python-path=/var/www/html/aztecglyphs/env_aztecglyphrecognition:/var/www/html/aztecglyphs/env_aztecglyphrecognition/lib/python3.9/site-packages
-  WSGIScriptAlias / /var/www/html/aztecglyphs/aztecglyphrecognition.wsgi
-        # You have to add every Flask route as WSGI alias:
-        WSGIScriptAlias /(.*) /var/www/html/aztecglyphs/env_aztecglyphrecognition/(.*)
-        <Directory /var/www/html/flask>
-                WSGIProcessGroup aztecglyphrecognition
-                WSGIApplicationGroup %{GLOBAL}
-                Order deny,allow
-                Allow from all
-        </Directory>
-
-        ServerName aztecglyphs.uoregon.edu
-        ServerAdmin adminuser@aztecglyphs.uoregon.edu
-        DocumentRoot /var/www/html/aztecglyphs
-        LogLevel warn
-        ErrorLog /var/log/httpd/aztecglyphrecognition-error.log
-        CustomLog /var/log/httpd/aztecglyphrecognition-access.log combined
-
-</VirtualHost>
-~~~
-
-> 
-
-Create a sof link with enabled sites:
-
-> 
-
-~~~
-ln -s /etc/httpd/sites-available/aztecglyphrecognition.conf /etc/httpd/sites-enabled/aztecglyphrecognition.conf
-~~~
-
-> 
-
-Check "Apache" user has proper permission under /var/www/html/aztecglyphs/
-
-and restart Apache server:
-
-> 
-
-~~~
-sudo service httpd restart
-~~~
-
-> 
-
-Now, it should be ready for user (https://yourdomain.here:5000)
-
-> 
+- app.py
+- app.html
 
 ## VISUAL RESULT
 
@@ -299,6 +79,10 @@ Now, it should be ready for user (https://yourdomain.here:5000)
 08-15-2021
 
 You can have a look at [my GSoC blog](https://lisardop.github.io/) with all the timeline progress.
+
+08-20-2021
+
+Here is a functional URL for [Aztec Glyphs Recognition](https://aztecglyphrecognition.herokuapp.com)
 
 # License
 
