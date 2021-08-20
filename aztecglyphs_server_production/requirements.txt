@@ -1,0 +1,9 @@
+gunicorn
+tensorflow==2.3.1
+flask
+flask-executor
+Werkzeug
+flask-socketio
+keras
+pillow
+scipy
