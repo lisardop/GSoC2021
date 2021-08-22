@@ -43,23 +43,23 @@ Test and implementation:
 
 # 2. Implementation
 
-There is two main environments:
+There are two main environments:
 
 ## AZTECGLYPHS_LOCALHOST (for use in your local machine or VM)
 
-The tools use two main files:
+The tool uses two main files:
 
 - aztecglyphrecognition.py (Mobilenet prototype)
 
-It's adapted from [Tarun's work](https://colab.research.google.com/drive/1rUA51e5Wz-VxsuNOXkfwIcD8PPasXMAG) to Flask. While the client doesn't upload any image, wait in 'blank' mode, if not, upload the image(s), load them and analyze them, get the 5 closes images, extract the features and load the results in an array.
+It's adapted from [Tarun's work](https://colab.research.google.com/drive/1rUA51e5Wz-VxsuNOXkfwIcD8PPasXMAG) to Flask. While the client doesn't upload any image, wait in 'blank.html' mode, if not, upload image(s), load and analyze them, get the 5 closes images, extract the features and load the results in an array.
 
 - aztecglyphrecognition.html
 
-There is a fancy label for upload files button. When pressed it's hidden and 'Clear results' is shown instead. Then gets the results of the array from Mobilenet .py with a socket and print back them in the browser. In the meanwhile a gear gif is shown while waiting the predictions.
+There is a fancy label for upload files button. When pressed it's hidden and 'Clear results' is shown instead. Then gets the results of the array from Mobilenet .py with a websocket and print back them in the browser. In the meanwhile a gear gif is shown waiting the predictions.
 
 ## AZTECGLYPHS_SERVER_PRODUCTION (for deploy in a hosting server)
 
-Use also two main files, similar as in localhost env:
+Use also two main files, the same as in localhost env but renamed and configured for production:
 
 - app.py
 - app.html
