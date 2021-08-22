@@ -41,6 +41,8 @@ Test and implementation:
 
 [Aztec Glyphs Recognition URL](https://aztecglyphrecognition.herokuapp.com)
 
+NOTE: After one hour of non-use, the URL needs some seconds to wake up. If you get an error from browser, just reload the URL.
+
 # 2. Implementation
 
 There are two main environments:
